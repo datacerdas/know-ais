@@ -6,6 +6,12 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import * as h3 from "h3-js";
 import geojson2h3 from "geojson2h3";
 
+import Papa from 'papaparse'
+import port_wsl from "../data/port_wsl.csv"
+
+// const port_wsl = Papa.parse(datacsv[0]);
+// console.log(port_wsl[1].h3_5_hexring)
+
 const DATA = {
   type: "Feature",
   geometry: {
@@ -74,15 +80,23 @@ const polygon = {
 
 const hexagons = geojson2h3.featureToH3Set(polygon, 10);
 // -> ['8a2830855047fff', '8a2830855077fff', '8a283085505ffff', '8a283085506ffff']
+// console.log(hexagons)
+// console.log('______________________')
+// console.log(JSON.parse(port_wsl[1].h3_5_hexring.replace(/'/g, '"')))
 
-const feature = geojson2h3.h3SetToFeature(hexagons);
+;
+// const hexagons2 = port_wsl[1].h3_5_hexring
+
+// const feature = geojson2h3.h3SetToFeature(hexagons);
+const feature = geojson2h3.h3SetToMultiPolygonFeature(JSON.parse(port_wsl[20].h3_5_hexring.replace(/'/g, '"')));
 // -> {type: 'Feature', properties: {}, geometry: {type: 'Polygon', coordinates: [...]}}
 
 const Map: Component = () => {
   const [viewport, setViewport] = createSignal({
-    center: [-122.47485823276713, 37.85878356045377],
-    zoom: 15,
+    center: [-151.75039, 59.5983 ],
+    zoom: 8,
   } as Viewport);
+  const [mouseCoords, setMouseCoords] = createSignal({ lat: 0, lng: 0 });
 
   return (
     <MapGL
@@ -91,7 +105,11 @@ const Map: Component = () => {
       }}
       viewport={viewport()}
       onViewportChange={(evt: Viewport) => setViewport(evt)}
+      onMouseMove={(evt: any) => setMouseCoords(evt.lngLat)}
     >
+      <div >
+        Lat: {mouseCoords().lat.toFixed(4)} Lng: {mouseCoords().lng.toFixed(4)}
+      </div>
       <Source
         source={{
           type: "geojson",
@@ -103,7 +121,7 @@ const Map: Component = () => {
             type: "line",
             paint: {
               "line-color": "hsl(100, 100%, 50%)",
-              "line-width": 5,
+              "line-width": 3,
             },
           }}
         />
