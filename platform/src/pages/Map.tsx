@@ -1,5 +1,5 @@
 import { render } from "solid-js/web";
-import { Component, createSignal, For } from "solid-js";
+import { Component, createEffect, createSignal, For } from "solid-js";
 import MapGL, { Viewport, Source, Layer } from "solid-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
@@ -10,9 +10,11 @@ import geojson2h3 from "geojson2h3";
 // import Papa from "papaparse";
 import ports_wfp from "../data/ports_wfp.csv";
 import ports_baltic from "../data/ports_baltic.csv";
+import shipping_traj from "../data/shipping_traj.csv";
 
 import neo4j from "neo4j-driver"
 import AppLoader from "../AppLoader";
+import { movement, setMovement } from "../stores/MovementStore";
 
 
 const driver = neo4j.driver('bolt://localhost:7687', neo4j.auth.basic('neo4j', 'bps12345'))
@@ -40,7 +42,11 @@ await driver.close()
 // const port_wsl = Papa.parse(datacsv[0]);
 // console.log(port_wsl[1].h3_5_hexring)
 
-// console.log(ports_baltic, 'dar')
+// setMovement(shipping_traj[0])
+
+console.log(shipping_traj[2], 'dar')
+
+// console.log(movement)
 
 const DATA = {
   type: "Feature",
@@ -291,6 +297,12 @@ const PATH = {
   },
 };
 
+createEffect( () => {
+  setMovement('geometry', 'coordinates', JSON.parse(shipping_traj[19].movements))
+  // setMovement(PATH)
+})
+console.log(movement, PATH)
+
 // const kRing = h3.kRing(index, 3);
 // const poly = h3.polyfill(
 //   [
@@ -408,8 +420,8 @@ const Map: Component = () => {
                 style={{
                   type: "fill",
                   paint: {
-                    "fill-color": "hsl(100, 70%, 50%)",
-                    "fill-opacity": 0.3
+                    "fill-color": "hsl(100, 90%, 50%)",
+                    "fill-opacity": 0.6
                     // https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/
                   },
                 }}
@@ -419,22 +431,23 @@ const Map: Component = () => {
         }
       </For>
 
-      {/* <Source
+      <Source
         source={{
           type: "geojson",
-          data: PATH,
+          data: JSON.parse(JSON.stringify(movement)),
         }}
       >
         <Layer
           style={{
             type: "line",
             paint: {
-              "line-color": "hsl(100, 100%, 50%)",
+              "line-color": "hsl(50, 100%, 50%)",
               "line-width": 3,
             },
           }}
         />
-      </Source> */}
+      </Source>
+
     </MapGL>
   );
 };
