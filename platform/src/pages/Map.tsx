@@ -29,7 +29,7 @@ try {
   const singleRecord = result.records[0]
   const node = singleRecord.get(0)
 
-  console.log(node.properties.name, 'voila')
+  // console.log(node.properties.name, 'voila')
 } finally {
   await session.close()
 }
@@ -369,7 +369,7 @@ ports_baltic.forEach((e:any) => {
     );
   ports.push(h3_5_hexring)
 })
-console.log(ports, '31')
+// console.log(ports, '31')
 
 // const multi_port = (h3:any) => {
   // geojson2h3.h3SetToMultiPolygonFeature(
@@ -406,10 +406,11 @@ const Map: Component = () => {
             >
               <Layer
                 style={{
-                  type: "line",
+                  type: "fill",
                   paint: {
-                    "line-color": "hsl(100, 100%, 50%)",
-                    "line-width": 3,
+                    "fill-color": "hsl(100, 70%, 50%)",
+                    "fill-opacity": 0.3
+                    // https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/
                   },
                 }}
               />
