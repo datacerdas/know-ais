@@ -8,6 +8,8 @@ import "@thisbeyond/solid-select/style.css";
 import * as h3 from "h3-js";
 import geojson2h3 from "geojson2h3";
 
+
+
 // import ports_wfp from "../data/ports_wfp.csv";
 import ports__ from "../data/ports__.csv";
 // import shipping_traj from "../data/shipping_traj.csv";
@@ -18,27 +20,27 @@ import AppLoader from "../AppLoader";
 import { movement, setMovement } from "../stores/MovementStore";
 
 
-const driver = neo4j.driver('bolt://localhost:7687', neo4j.auth.basic('neo4j', 'bps12345'))
-const session = driver.session()
+// const driver = neo4j.driver('bolt://localhost:7687', neo4j.auth.basic('neo4j', 'bps12345'))
+// const session = driver.session()
 
-const personName = 'Alice'
+// const personName = 'Alice'
 
-try {
-  const result = await session.run(
-    'CREATE (a:Person {name: $name}) RETURN a',
-    { name: personName }
-  )
+// try {
+//   const result = await session.run(
+//     'CREATE (a:Person {name: $name}) RETURN a',
+//     { name: personName }
+//   )
 
-  const singleRecord = result.records[0]
-  const node = singleRecord.get(0)
+//   const singleRecord = result.records[0]
+//   const node = singleRecord.get(0)
 
-  // console.log(node.properties.name, 'voila')
-} finally {
-  await session.close()
-}
+//   // console.log(node.properties.name, 'voila')
+// } finally {
+//   await session.close()
+// }
 
-// on application exit:
-await driver.close()
+// // on application exit:
+// await driver.close()
 
 
 let ports : any[] = []

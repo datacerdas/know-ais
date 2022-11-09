@@ -3,23 +3,22 @@
 @tailwind utilities;
 
 
-.custom.solid-select-container {
-    color: #fa7f25;
-    position: absolute;
+.know-ais.solid-select-container {
+    color: #fff;
     z-index: 1;
   }
-  .custom .solid-select-control {
-    outline-color: #fca560;
-    border-color: #fca560;
+  .know-ais .solid-select-control {
+    /* outline-color: #7dd3fc;
+    border-color: #7dd3fc; */
   }
-  .custom .solid-select-placeholder {
-    color: #fca560;
+  .know-ais .solid-select-placeholder {
+    /* color: #fca560; */
   }
-  .custom .solid-select-option:hover {
-    background-color: #fa7f25;
+  .know-ais .solid-select-option:hover {
+    background-color: #0ea5e9;
     color: #fff;
   }
-  .custom .solid-select-option[data-focused=true] {
-    background-color: #fca560;
+  .know-ais .solid-select-option[data-focused=true] {
+    background-color: #0ea5e9;
     color: #fff;
   }
