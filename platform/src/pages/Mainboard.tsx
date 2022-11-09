@@ -33,8 +33,8 @@ ports__.forEach((e:any) => {
 
 const Mainboard: Component = () => {
   const [viewport, setViewport] = createSignal({
-    center: [6.677059, 61.543988],
-    zoom: 4,
+    center: [-12.677059, 52.543988],
+    zoom: 3,
   } as Viewport);
   const [mouseCoords, setMouseCoords] = createSignal({ lat: 0, lng: 0 });
   
