@@ -11,8 +11,12 @@ import CommunityDetection from "./CommunityDetection";
 
 import ports__ from "../data/ports__.csv";
 import countries__ from "../data/country_geojson.csv";
+import h3_coverage from "../data/h3_1_int.csv";
 import { countries, ports, setCountries, setPorts } from "../stores/NodeStore";
 import simplify from "simplify-js";
+import AppLoader from "../AppLoader";
+
+console.log(h3_coverage)
 
 
 const Mainboard: Component = () => {
@@ -36,7 +40,7 @@ const Mainboard: Component = () => {
     // console.log(countries)
 
     let portObject: {}[] = []
-        ports__.forEach((e:any) => {
+    ports__.forEach((e:any) => {
         portObject.push({
             port: e.name,
             port_id: e.port_id,
@@ -47,6 +51,13 @@ const Mainboard: Component = () => {
             h3_5_hexring: e.h3_5_hexring,
             h3_5_hexring_MultiPolygon: geojson2h3.h3SetToMultiPolygonFeature(JSON.parse(e.h3_5_hexring.replace(/'/g, '"')))
         })
+    })
+
+    
+    let coveragetObject: {}[] = []
+    h3_coverage.forEach((e:any) => {
+        // console.log(e.h3_1, 'dfsq')
+        coveragetObject.push(geojson2h3.h3ToFeature(e.h3_1))
     })
 
   createEffect(()=>{
@@ -113,6 +124,34 @@ const Mainboard: Component = () => {
 
             {/* <RouteRecommendation /> */}
             <CommunityDetection />
+
+            <For each={coveragetObject}  fallback={<AppLoader />}>
+                  {(item: any) => (     
+                    <>
+                    {console.log(item)}
+                      <Source
+                        source={{
+                            type: "geojson",
+                            data: item,
+                        }}
+                      >
+                        <Layer
+                            style={{
+                            type: "fill",
+                            paint: {
+                                // "fill-color": "rgb("+`${item.cluster+22}`+","+`${item.cluster}`+","+`${item.cluster*42/3}`+")",
+                                // "fill-color": "hsl("+`${item.cluster/2}`+", 90%, 50%)",
+                                "fill-color": "#000",
+                                "fill-opacity": 0.4
+                                // https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/
+                            },
+                            }}
+                        />
+                      </Source>
+                    </>     
+                  )
+                  }
+              </For>
 
         </MapGL>
     </>

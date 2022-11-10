@@ -107,7 +107,7 @@ const CommunityDetection: Component = () => {
                 }
             </For> */}
             
-            <Show when={portCommunity.community.length > 0}>
+            {/* <Show when={portCommunity.community.length > 0}> */}
               <For each={portCommunity.community}  fallback={<AppLoader />}>
                   {(item: any) => (     
                     <>
@@ -123,7 +123,7 @@ const CommunityDetection: Component = () => {
                             type: "fill",
                             paint: {
                                 "fill-color": "rgb("+`${item.cluster+22}`+","+`${item.cluster}`+","+`${item.cluster*42/3}`+")",
-                                // "fill-color": "hsl("+`${item.cluster}`+", 90%, 50%)",
+                                // "fill-color": "hsl("+`${item.cluster/2}`+", 90%, 50%)",
                                 // "fill-color": "#00ffff",
                                 "fill-opacity": 0.8
                                 // https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/
@@ -135,7 +135,7 @@ const CommunityDetection: Component = () => {
                   )
                   }
               </For>
-            </Show>
+            {/* </Show> */}
 
             {/* <Source
                 source={{
