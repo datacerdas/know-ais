@@ -1,6 +1,6 @@
 ![UN Big Data Hackathon 2022](https://unstats.un.org/bigdata/assets/img/hackathon-web-banner.png "UNBDH 2022")
 
-# Shortest Path AIS Data
+# KnowAIS: Self-Service Any-Purpose Analytics Platform 
 
 [...]
 
@@ -57,8 +57,11 @@ There are further `README` files in key directories.
 
     .
     ├── notebooks
-    │   ├── [...].ipynb
-    │   └── [...].ipynb
+    │   ├── 00_Data_preparation.ipynb
+    │   └── 01_Sampling_AIS.ipynb
+    │   └── 02_Trajectory_AIS_pyspark.ipynb
+    │   └── 02a_Trajectory_AIS_pandas.ipynb
+    │   └── 03_Inject_AIS_result.ipynb
     │           The Jupyter Notebooks that we created
     │
     ├── code
