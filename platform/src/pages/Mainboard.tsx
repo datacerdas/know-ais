@@ -21,11 +21,11 @@ import { countries, ports, setCountries, setPorts } from "../stores/NodeStore";
 import AppLoader from "../AppLoader";
 
 const Mainboard: Component = () => {
-  const [viewport, setViewport] = createSignal({
-    center: [-12.677059, 52.543988],
-    zoom: 3,
-  } as Viewport);
-  const [mouseCoords, setMouseCoords] = createSignal({ lat: 0, lng: 0 });  
+    const [viewport, setViewport] = createSignal({
+        center: [-12.677059, 52.543988],
+        zoom: 3,
+    } as Viewport);
+    const [mouseCoordinates, setMouseCoordinates] = createSignal({ lat: -12.677059, lng: 52.543988 });  
 
     var options = {tolerance: 0.01, highQuality: false};
     console.log(JSON.parse(countries__[3].country_geojson) )
@@ -122,7 +122,7 @@ const Mainboard: Component = () => {
             }}
             viewport={viewport()}
             onViewportChange={(evt: Viewport) => setViewport(evt)}
-            onMouseMove={(evt: any) => setMouseCoords(evt.lngLat)}
+            onMouseMove={(evt: any) => setMouseCoordinates(evt.lngLat)}
         >
             
             <Control type="navigation" />
@@ -131,7 +131,7 @@ const Mainboard: Component = () => {
             <Control type="scale" />
             <button style={{ position: 'absolute', 'z-index': 1 }} 
                     class="text-white bottom-8 right-3 font-extralight text-xs">
-                Lat: {mouseCoords().lat.toFixed(6)}&emsp;Lon: {mouseCoords().lng.toFixed(6)}
+                Lat: {mouseCoordinates().lat.toFixed(6)}&emsp;Lon: {mouseCoordinates().lng.toFixed(6)}
             </button>
             
             {/* <div style={{ position: 'absolute', 'z-index': 1 }} 
