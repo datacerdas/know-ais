@@ -8,8 +8,6 @@ import "@thisbeyond/solid-select/style.css";
 import * as h3 from "h3-js";
 import geojson2h3 from "geojson2h3";
 
-
-
 // import ports_wfp from "../data/ports_wfp.csv";
 import ports__ from "../data/ports__.csv";
 // import shipping_traj from "../data/shipping_traj.csv";

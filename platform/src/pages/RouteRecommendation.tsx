@@ -17,7 +17,7 @@ import ports__ from "../data/ports__.csv";
 import shipping_traj from "../data/shipping_traj_2.csv";
 
 import AppLoader from "../AppLoader";
-import { movement, setMovement } from "../stores/MovementStore";
+import { movement, setMovement } from "../stores/GeoStore";
 
 
 let ports : any[] = []
@@ -33,57 +33,58 @@ ports__.forEach((e:any) => {
 const RouteRecommendation: Component = () => {
 
   const optionSelect = createOptions(["apple", "banana", "pear", "pineapple", "kiwi"]);
-  
+
   createEffect( () => {
     setMovement('geometry', 'coordinates', JSON.parse(shipping_traj[29].movements))
   })
 
   return (
     <>
-        <div class="top-32 left-8" style={{ position: 'absolute', 'z-index': 1 }}>
-            <Select class="know-ais w-80" {...optionSelect} />
-        </div>
+    
+            <div class="top-32 left-8" style={{ position: 'absolute', 'z-index': 1 }}>
+                <Select class="know-ais w-80" {...optionSelect} />
+            </div>
 
-        <For each={ports} fallback={<AppLoader />}>
-            {(item: any) => (          
-                <Source
-                source={{
-                    type: "geojson",
-                    data: item,
-                }}
-                >
-                <Layer
-                    style={{
-                    type: "fill",
-                    paint: {
-                        "fill-color": "hsl(100, 90%, 50%)",
-                        "fill-opacity": 0.6
-                        // https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/
-                    },
+            <For each={ports} fallback={<AppLoader />}>
+                {(item: any) => (          
+                    <Source
+                    source={{
+                        type: "geojson",
+                        data: item,
                     }}
-                />
-                </Source>
-            )
-            }
-        </For>
+                    >
+                    <Layer
+                        style={{
+                        type: "fill",
+                        paint: {
+                            "fill-color": "hsl(100, 90%, 50%)",
+                            "fill-opacity": 0.6
+                            // https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/
+                        },
+                        }}
+                    />
+                    </Source>
+                )
+                }
+            </For>
 
-        <Source
-            source={{
-            type: "geojson",
-            data: JSON.parse(JSON.stringify(movement)),
-            }}
-        >
-            <Layer
-            style={{
-                type: "line",
-                paint: {
-                "line-color": "hsl(52, 86%, 53%)",
-                "line-width": 3,
-                },
-            }}
-            />
-        </Source>
-        
+            <Source
+                source={{
+                type: "geojson",
+                data: JSON.parse(JSON.stringify(movement)),
+                }}
+            >
+                <Layer
+                style={{
+                    type: "line",
+                    paint: {
+                    "line-color": "hsl(52, 86%, 53%)",
+                    "line-width": 3,
+                    },
+                }}
+                />
+            </Source>
+            
     </>
   );
 };

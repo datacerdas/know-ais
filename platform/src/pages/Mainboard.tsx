@@ -2,8 +2,46 @@ import { Component, createEffect, createSignal, For } from "solid-js";
 import MapGL, { Viewport, Source, Layer, Control } from "solid-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
+import geojson2h3 from "geojson2h3";
+
 import HackathonLogo from "../assets/hackathon-web-banner.png";
 import RouteRecommendation from "./RouteRecommendation";
+import KnowledgeGraph from "./KnowledgeGraph";
+import CommunityDetection from "./CommunityDetection";
+
+import ports__ from "../data/ports__.csv";
+import countries__ from "../data/country_geojson.csv";
+import { countries, ports, setCountries, setPorts } from "../stores/NodeStore";
+import simplify from "simplify-js";
+
+let countryObject: {}[] = []
+countries__.forEach((e:any) => {
+  countryObject.push({
+    country: e.country,
+    iso2: e.iso2,
+    geojson: e.country_geojson,
+    lat_country: e.Lat,
+    lon_country: e.Lon
+  })
+})
+setCountries('country', countryObject)
+// console.log(countries)
+
+let portObject: {}[] = []
+ports__.forEach((e:any) => {
+  portObject.push({
+    port: e.name,
+    port_id: e.port_id,
+    lat_port: e.lat_port,
+    lon_port: e.lon_port,
+    iso2: e.iso2,
+    area: e.area,
+    h3_5_hexring: e.h3_5_hexring,
+    h3_5_hexring_MultiPolygon: geojson2h3.h3SetToMultiPolygonFeature(JSON.parse(e.h3_5_hexring.replace(/'/g, '"')))
+  })
+})
+setPorts('port', portObject)
+
 
 const Mainboard: Component = () => {
   const [viewport, setViewport] = createSignal({
@@ -27,7 +65,7 @@ const Mainboard: Component = () => {
                         <ul class="flex items-center space-x-8">
                             <li><a class="hover:text-sky-500 dark:hover:text-sky-400" href="/docs/installation">Route Recommendation</a></li>
                             <li><a href="https://tailwindui.com/?ref=top" class="hover:text-sky-500 dark:hover:text-sky-400">Community Detection</a></li>
-                            <li><a class="hover:text-sky-500 dark:hover:text-sky-400" href="/blog">Port Importance</a></li>
+                            <li><a class="hover:text-sky-500 dark:hover:text-sky-400" href="/blog">Node Importance</a></li>
                             <li><a class="hover:text-sky-500 dark:hover:text-sky-400" href="/showcase">Knowledge Graph</a>
                             <span class="ml-2 font-medium text-xs leading-5 rounded-full text-sky-600 bg-sky-400/10 px-2 py-0.5 dark:text-sky-400">Soon!</span>
                             </li>
@@ -43,7 +81,7 @@ const Mainboard: Component = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div>      
 
         <MapGL
             options={{
@@ -63,7 +101,13 @@ const Mainboard: Component = () => {
                 Lat: {mouseCoords().lat.toFixed(6)}&emsp;Lon: {mouseCoords().lng.toFixed(6)}
             </button>
             
+            {/* <div style={{ position: 'absolute', 'z-index': 1 }} 
+                class="flex items-center justify-center">
+                <KnowledgeGraph />
+            </div> */}
+
             <RouteRecommendation />
+            {/* <CommunityDetection /> */}
 
         </MapGL>
     </>
