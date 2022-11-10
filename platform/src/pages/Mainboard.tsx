@@ -10,11 +10,14 @@ import RouteRecommendation from "./RouteRecommendation";
 import KnowledgeGraph from "./KnowledgeGraph";
 import CommunityDetection from "./CommunityDetection";
 
+// @ts-ignore
 import ports__ from "../data/ports__.csv";
+// @ts-ignore
 import countries__ from "../data/country_geojson.csv";
+// @ts-ignore
 import h3_coverage from "../data/h3_1_int.csv";
 import { countries, ports, setCountries, setPorts } from "../stores/NodeStore";
-import simplify from "simplify-js";
+
 import AppLoader from "../AppLoader";
 
 const Mainboard: Component = () => {

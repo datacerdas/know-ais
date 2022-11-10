@@ -11,9 +11,9 @@ import geojson2h3 from "geojson2h3";
 
 import HackathonLogo from "../assets/hackathon-web-banner.png";
 
-// import ports_wfp from "../data/ports_wfp.csv";
+// @ts-ignore
 import ports__ from "../data/ports__.csv";
-// import shipping_traj from "../data/shipping_traj.csv";
+// @ts-ignore
 import shipping_traj from "../data/shipping_traj_2.csv";
 
 import AppLoader from "../AppLoader";

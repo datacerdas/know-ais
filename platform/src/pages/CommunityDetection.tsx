@@ -9,9 +9,9 @@ import * as h3 from "h3-js";
 import geojson2h3 from "geojson2h3";
 import simplify from "simplify-js";
 
+// @ts-ignore
 import country_louvain from "../data/cluster/country_community_detection_louvain.csv";
-// import countries___ from "../data/countries.geojson";
-
+// @ts-ignore
 import port_louvain from "../data/cluster/port_community_detection_louvain.csv";
 
 import AppLoader from "../AppLoader";
