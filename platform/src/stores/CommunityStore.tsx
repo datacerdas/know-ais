@@ -12,5 +12,5 @@ export interface CommunityStore {
 }
 
 export const [community, setCommunity] = createStore<CommunityStore>({ community: [] })
-export const [countryCmmunity, setCountryCommunity] = createStore<CommunityStore>({ community: [] })
+export const [countryCommunity, setCountryCommunity] = createStore<CommunityStore>({ community: [] })
 export const [portCommunity, setPortCommunity] = createStore<CommunityStore>({ community: [] })

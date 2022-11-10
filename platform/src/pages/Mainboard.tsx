@@ -3,6 +3,7 @@ import MapGL, { Viewport, Source, Layer, Control } from "solid-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 import geojson2h3 from "geojson2h3";
+import * as turf from '@turf/turf';
 
 import HackathonLogo from "../assets/hackathon-web-banner.png";
 import RouteRecommendation from "./RouteRecommendation";
@@ -16,9 +17,6 @@ import { countries, ports, setCountries, setPorts } from "../stores/NodeStore";
 import simplify from "simplify-js";
 import AppLoader from "../AppLoader";
 
-console.log(h3_coverage)
-
-
 const Mainboard: Component = () => {
   const [viewport, setViewport] = createSignal({
     center: [-12.677059, 52.543988],
@@ -26,15 +24,25 @@ const Mainboard: Component = () => {
   } as Viewport);
   const [mouseCoords, setMouseCoords] = createSignal({ lat: 0, lng: 0 });  
 
-  
+    var options = {tolerance: 0.01, highQuality: false};
+    console.log(JSON.parse(countries__[3].country_geojson) )
+
     let countryObject: {}[] = []
     countries__.forEach((e:any) => {
         countryObject.push({
             country: e.country,
             iso2: e.iso2,
-            geojson: e.country_geojson,
+            // geojson: e.country_geojson,
+            geojson: turf.simplify(JSON.parse(e.country_geojson), {tolerance: 0.01, highQuality: false}),
             lat_country: e.Lat,
-            lon_country: e.Lon
+            lon_country: e.Lon,
+            coordinate: {
+                type: "Feature",
+                geometry: {
+                  type: "Point",
+                  coordinates: [parseFloat(e.Lon),parseFloat(e.Lat)] ,
+                },
+            },
         })
     })
     // console.log(countries)
@@ -46,6 +54,13 @@ const Mainboard: Component = () => {
             port_id: e.port_id,
             lat_port: e.lat_port,
             lon_port: e.lon_port,
+            coordinate: {
+                type: "Feature",
+                geometry: {
+                  type: "Point",
+                  coordinates: [parseFloat(e.lon_port),parseFloat(e.lat_port)] ,
+                },
+            },
             iso2: e.iso2,
             area: e.area,
             h3_5_hexring: e.h3_5_hexring,
@@ -56,14 +71,13 @@ const Mainboard: Component = () => {
     
     let coveragetObject: {}[] = []
     h3_coverage.forEach((e:any) => {
-        // console.log(e.h3_1, 'dfsq')
         coveragetObject.push(geojson2h3.h3ToFeature(e.h3_1))
     })
 
   createEffect(()=>{
     setCountries('country', countryObject)
     setPorts('port', portObject)
-    // console.log(countries, ports)
+    console.log(countries, ports)
   })
 
   return (
@@ -128,7 +142,6 @@ const Mainboard: Component = () => {
             <For each={coveragetObject}  fallback={<AppLoader />}>
                   {(item: any) => (     
                     <>
-                    {console.log(item)}
                       <Source
                         source={{
                             type: "geojson",

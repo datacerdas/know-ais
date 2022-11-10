@@ -17,28 +17,9 @@ import port_louvain from "../data/cluster/port_community_detection_louvain.csv";
 import AppLoader from "../AppLoader";
 import { coordinatePoint, setCoordinatePoint } from "../stores/GeoStore";
 import { createStore } from "solid-js/store";
-import { community, portCommunity, setCommunity, setCountryCommunity, setPortCommunity } from "../stores/CommunityStore";
+import { community, countryCommunity, portCommunity, setCommunity, setCountryCommunity, setPortCommunity } from "../stores/CommunityStore";
 import { countries, ports } from "../stores/NodeStore";
 
-
-let countryCommunityObject: {}[] = []
-country_louvain.forEach((e:any) => {
-  let countryIndex = countries.country.findIndex(obj => obj.iso2 == e.code)
-  if(countryIndex !== -1){
-    let country = countries.country[countryIndex];
-    countryCommunityObject.push({
-      id: e.code,
-      name: e.country,
-      cluster: parseInt(e.communityId),
-      country: country.country,
-      iso2: country.iso2,
-      geojson: country.geojson,
-      lat_country: country.lat_country,
-      lon_country: country.lon_country
-    })
-  }
-})
-// console.log(countryCommunity, portCommunity, 'ada')
 
 const CommunityDetection: Component = () => {
   
@@ -56,10 +37,30 @@ const CommunityDetection: Component = () => {
         port_id: port.port_id,
         lat_port: port.lat_port,
         lon_port: port.lon_port,
+        coordinate: port.coordinate,
         iso2: port.iso2,
         area: port.area,
         h3_5_hexring: port.h3_5_hexring,
         h3_5_hexring_MultiPolygon: port.h3_5_hexring_MultiPolygon
+      })
+    }
+  })
+  
+  let countryCommunityObject: {}[] = []
+  country_louvain.forEach((e:any) => {
+    let countryIndex = countries.country.findIndex(obj => obj.iso2 == e.code)
+    if(countryIndex !== -1){
+      let country = countries.country[countryIndex];
+      countryCommunityObject.push({
+        id: e.code,
+        name: e.country,
+        cluster: parseInt(e.communityId),
+        country: country.country,
+        iso2: country.iso2,
+        geojson: country.geojson,
+        lat_country: country.lat_country,
+        lon_country: country.lon_country,
+        coordinate: country.coordinate
       })
     }
   })
@@ -108,10 +109,9 @@ const CommunityDetection: Component = () => {
             </For> */}
             
             {/* <Show when={portCommunity.community.length > 0}> */}
-              <For each={portCommunity.community}  fallback={<AppLoader />}>
+              {/* <For each={portCommunity.community}  fallback={<AppLoader />}>
                   {(item: any) => (     
                     <>
-                    {/* {console.log(item.h3_5_hexring_MultiPolygon)} */}
                       <Source
                         source={{
                             type: "geojson",
@@ -126,6 +126,37 @@ const CommunityDetection: Component = () => {
                                 // "fill-color": "hsl("+`${item.cluster/2}`+", 90%, 50%)",
                                 // "fill-color": "#00ffff",
                                 "fill-opacity": 0.8
+                                // https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/
+                            },
+                            }}
+                        />
+                      </Source>
+                    </>     
+                  )
+                  }
+              </For> */}
+            {/* </Show> */}
+
+            
+            {/* <Show when={portCommunity.community.length > 0}> */}
+              <For each={countryCommunity.community}  fallback={<AppLoader />}>
+                  {(item: any) => (     
+                    <>
+                    {/* {console.log(item.coordinate, 'sd')} */}
+                      <Source
+                        source={{
+                            type: "geojson",
+                            data: item.geojson,
+                        }}
+                      >
+                        <Layer
+                            style={{
+                            type: "fill",
+                            paint: {
+                                "fill-color": "rgb("+`${item.cluster+22}`+","+`${item.cluster}`+","+`${item.cluster*42/3}`+")",
+                                // "fill-color": "hsl("+`${item.cluster/2}`+", 90%, 50%)",
+                                // "fill-color": "#00ffff",
+                                "fill-opacity": 0.90
                                 // https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/
                             },
                             }}

@@ -5,6 +5,7 @@ export type Port = {
     port_id?: any
     lat_port?: any
     lon_port?: any
+    coordinate?: {}
     iso2?: any
     area?: any
     h3_5_hexring?: any
@@ -15,6 +16,7 @@ export type Country = {
     country?: string
     lat_country?: any
     lon_country?: any
+    coordinate?: {}
     iso2?: any
     geojson?: any
 }
