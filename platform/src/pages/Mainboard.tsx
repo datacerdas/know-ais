@@ -14,34 +14,6 @@ import countries__ from "../data/country_geojson.csv";
 import { countries, ports, setCountries, setPorts } from "../stores/NodeStore";
 import simplify from "simplify-js";
 
-let countryObject: {}[] = []
-countries__.forEach((e:any) => {
-  countryObject.push({
-    country: e.country,
-    iso2: e.iso2,
-    geojson: e.country_geojson,
-    lat_country: e.Lat,
-    lon_country: e.Lon
-  })
-})
-setCountries('country', countryObject)
-// console.log(countries)
-
-let portObject: {}[] = []
-ports__.forEach((e:any) => {
-  portObject.push({
-    port: e.name,
-    port_id: e.port_id,
-    lat_port: e.lat_port,
-    lon_port: e.lon_port,
-    iso2: e.iso2,
-    area: e.area,
-    h3_5_hexring: e.h3_5_hexring,
-    h3_5_hexring_MultiPolygon: geojson2h3.h3SetToMultiPolygonFeature(JSON.parse(e.h3_5_hexring.replace(/'/g, '"')))
-  })
-})
-setPorts('port', portObject)
-
 
 const Mainboard: Component = () => {
   const [viewport, setViewport] = createSignal({
@@ -49,6 +21,39 @@ const Mainboard: Component = () => {
     zoom: 3,
   } as Viewport);
   const [mouseCoords, setMouseCoords] = createSignal({ lat: 0, lng: 0 });  
+
+  
+    let countryObject: {}[] = []
+    countries__.forEach((e:any) => {
+        countryObject.push({
+            country: e.country,
+            iso2: e.iso2,
+            geojson: e.country_geojson,
+            lat_country: e.Lat,
+            lon_country: e.Lon
+        })
+    })
+    // console.log(countries)
+
+    let portObject: {}[] = []
+        ports__.forEach((e:any) => {
+        portObject.push({
+            port: e.name,
+            port_id: e.port_id,
+            lat_port: e.lat_port,
+            lon_port: e.lon_port,
+            iso2: e.iso2,
+            area: e.area,
+            h3_5_hexring: e.h3_5_hexring,
+            h3_5_hexring_MultiPolygon: geojson2h3.h3SetToMultiPolygonFeature(JSON.parse(e.h3_5_hexring.replace(/'/g, '"')))
+        })
+    })
+
+  createEffect(()=>{
+    setCountries('country', countryObject)
+    setPorts('port', portObject)
+    // console.log(countries, ports)
+  })
 
   return (
     <>
@@ -106,8 +111,8 @@ const Mainboard: Component = () => {
                 <KnowledgeGraph />
             </div> */}
 
-            <RouteRecommendation />
-            {/* <CommunityDetection /> */}
+            {/* <RouteRecommendation /> */}
+            <CommunityDetection />
 
         </MapGL>
     </>
