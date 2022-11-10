@@ -9,13 +9,15 @@ import * as h3 from "h3-js";
 import geojson2h3 from "geojson2h3";
 
 // import ports_wfp from "../data/ports_wfp.csv";
+// @ts-ignore
 import ports__ from "../data/ports__.csv";
 // import shipping_traj from "../data/shipping_traj.csv";
+// @ts-ignore
 import shipping_traj from "../data/shipping_traj_2.csv";
 
 import neo4j from "neo4j-driver"
 import AppLoader from "../AppLoader";
-import { movement, setMovement } from "../stores/MovementStore";
+import { movement, setMovement } from "../stores/GeoStore";
 
 
 // const driver = neo4j.driver('bolt://localhost:7687', neo4j.auth.basic('neo4j', 'bps12345'))
