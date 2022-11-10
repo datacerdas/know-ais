@@ -1,4 +1,4 @@
-import { Component, createEffect, createSignal, For } from "solid-js";
+import { Component, createEffect, createSignal, For, Match, Show, Switch } from "solid-js";
 import MapGL, { Viewport, Source, Layer, Control } from "solid-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
@@ -27,9 +27,6 @@ const Mainboard: Component = () => {
     } as Viewport);
     const [mouseCoordinates, setMouseCoordinates] = createSignal({ lat: -12.677059, lng: 52.543988 });  
 
-    var options = {tolerance: 0.01, highQuality: false};
-    console.log(JSON.parse(countries__[3].country_geojson) )
-
     let countryObject: {}[] = []
     countries__.forEach((e:any) => {
         countryObject.push({
@@ -48,7 +45,6 @@ const Mainboard: Component = () => {
             },
         })
     })
-    // console.log(countries)
 
     let portObject: {}[] = []
     ports__.forEach((e:any) => {
@@ -70,17 +66,18 @@ const Mainboard: Component = () => {
             h3_5_hexring_MultiPolygon: geojson2h3.h3SetToMultiPolygonFeature(JSON.parse(e.h3_5_hexring.replace(/'/g, '"')))
         })
     })
-
     
     let coveragetObject: {}[] = []
     h3_coverage.forEach((e:any) => {
         coveragetObject.push(geojson2h3.h3ToFeature(e.h3_1))
     })
 
+  const [ sectionPage, setSectionPage ] = createSignal('route')
+
   createEffect(()=>{
     setCountries('country', countryObject)
     setPorts('port', portObject)
-    console.log(countries, ports)
+    // console.log(countries, ports)
   })
 
   return (
@@ -91,15 +88,21 @@ const Mainboard: Component = () => {
         </a>
 
         <div style={{ position: 'absolute', 'z-index': 1 }} 
-                class="top-7 left-36 relative pt-6 lg:pt-8 flex items-center justify-between text-slate-700 font-semibold text-sm leading-6 dark:text-slate-200">
+                class="top-3 left-36 relative pt-6 lg:pt-8 flex items-center justify-between text-slate-700 font-semibold text-sm leading-6 dark:text-slate-200">
             <div class="flex items-center">
                 <div class="hidden md:flex items-center border-l border-slate-200 ml-6 pl-6 dark:border-slate-800">
                     <nav>
-                        <ul class="flex items-center space-x-8">
-                            <li><a class="hover:text-sky-500 dark:hover:text-sky-400" href="/docs/installation">Route Recommendation</a></li>
-                            <li><a href="https://tailwindui.com/?ref=top" class="hover:text-sky-500 dark:hover:text-sky-400">Community Detection</a></li>
-                            <li><a class="hover:text-sky-500 dark:hover:text-sky-400" href="/blog">Node Importance</a></li>
-                            <li><a class="hover:text-sky-500 dark:hover:text-sky-400" href="/showcase">Knowledge Graph</a>
+                        <ul class="flex items-center space-x-6">
+                            <li><button class="hover:text-sky-500 dark:hover:text-sky-400 px-4 py-2 rounded-lg" 
+                                            classList={{ 'text-sky-500 bg-white/[.1]': sectionPage() == 'route' }}
+                                            onClick={e => {setSectionPage('route')}}>Route Recommendation</button></li>
+                            <li><button class="hover:text-sky-500 dark:hover:text-sky-400 px-4 py-2 rounded-lg" 
+                                            classList={{ 'text-sky-500 bg-white/[.1]': sectionPage() == 'cluster' }}
+                                            onClick={e => {setSectionPage('cluster')}}>Community Detection</button></li>
+                            <li><button class="hover:text-sky-500 dark:hover:text-sky-400 px-4 py-2 rounded-lg" 
+                                            classList={{ 'text-sky-500 bg-white/[.1]': sectionPage() == 'node' }}
+                                            onClick={e => {setSectionPage('node')}}>Node Importance</button></li>
+                            <li><a class="hover:text-sky-500 dark:hover:text-sky-400">Knowledge Graph</a>
                             <span class="ml-2 font-medium text-xs leading-5 rounded-full text-sky-600 bg-sky-400/10 px-2 py-0.5 dark:text-sky-400">Soon!</span>
                             </li>
                         </ul>
@@ -139,35 +142,41 @@ const Mainboard: Component = () => {
                 <KnowledgeGraph />
             </div> */}
 
-            {/* <RouteRecommendation /> */}
-            <CommunityDetection />
+            <Switch> 
+                <Match when={sectionPage() == 'route'}>
+                    <RouteRecommendation />
+                </Match>
+                <Match when={sectionPage() == 'cluster'}>
+                    <CommunityDetection />
+                </Match>
+            </Switch>
 
             <For each={coveragetObject}  fallback={<AppLoader />}>
-                  {(item: any) => (     
-                    <>
-                      <Source
-                        source={{
-                            type: "geojson",
-                            data: item,
+                {(item: any) => (     
+                <>
+                    <Source
+                    source={{
+                        type: "geojson",
+                        data: item,
+                    }}
+                    >
+                    <Layer
+                        style={{
+                        type: "fill",
+                        paint: {
+                            // "fill-color": "rgb("+`${item.cluster+22}`+","+`${item.cluster}`+","+`${item.cluster*42/3}`+")",
+                            // "fill-color": "hsl("+`${item.cluster/2}`+", 90%, 50%)",
+                            "fill-color": "#000",
+                            "fill-opacity": 0.4
+                            // https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/
+                        },
                         }}
-                      >
-                        <Layer
-                            style={{
-                            type: "fill",
-                            paint: {
-                                // "fill-color": "rgb("+`${item.cluster+22}`+","+`${item.cluster}`+","+`${item.cluster*42/3}`+")",
-                                // "fill-color": "hsl("+`${item.cluster/2}`+", 90%, 50%)",
-                                "fill-color": "#000",
-                                "fill-opacity": 0.4
-                                // https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/
-                            },
-                            }}
-                        />
-                      </Source>
-                    </>     
-                  )
-                  }
-              </For>
+                    />
+                    </Source>
+                </>     
+                )
+                }
+            </For>
 
         </MapGL>
     </>
