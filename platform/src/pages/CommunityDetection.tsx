@@ -60,7 +60,7 @@ const CommunityDetection: Component = () => {
     }
   })
 
-  const [mode, setMode] = createSignal("country")
+  const [mode, setMode] = createSignal("port")
 
   const optionSelect = createOptions(["country", "port"])
 
@@ -82,7 +82,7 @@ const CommunityDetection: Component = () => {
           onChange={(val) => {
             setMode(val)
           }}
-          initialValue="country"
+          initialValue="port"
           placeholder="Select filter"
         />
       </div>
