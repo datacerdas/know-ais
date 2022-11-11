@@ -108,7 +108,7 @@ const Mainboard: Component = () => {
                                             onClick={e => {setSectionPage('cluster')}}>Community Detection</button></li>
                             <li><button class="hover:text-sky-500 dark:hover:text-sky-400 px-4 py-2 rounded-lg" 
                                             classList={{ 'text-sky-500 bg-white/[.1]': sectionPage() == 'node' }}
-                                            onClick={e => {setSectionPage('node')}}>Port Importance</button></li>
+                                            onClick={e => {setSectionPage('node')}}>Port Ranking</button></li>
                             <li><button class="hover:text-sky-500 dark:hover:text-sky-400 px-4 py-2 rounded-lg" 
                                             classList={{ 'text-sky-500 bg-white/[.1]': sectionPage() == 'kg' }}
                                             onClick={e => {setSectionPage('kg');}}>Knowledge Graph</button>
