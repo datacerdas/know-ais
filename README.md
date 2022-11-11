@@ -84,15 +84,16 @@ The distance is calculated by aggregating each movement of the vessel during the
     │   └── 02a_Trajectory_AIS_pandas.ipynb
     │   └── 03_Inject_AIS_result.ipynb
     │   └── 04_Graph_Analysis_Port.ipynb
-    │   └── 05_Graph_Analysis_Country.ipynb
+    05_Graph_Analysis_Country.ipynb
     │           The Jupyter Notebooks that we created during the processing
     │
     ├── results
-    │   ├── [...]
+    │   └── [...]
     │           The key figures that we produced
     │
     ├── presentation
     │   ├── KnowAIS_ Self-Service Analytics Platform for Global Shipping Network.pdf
+    │   └── KnowAIS by Cerdasdata - UNBDH 2022.mp4
     │           The result presentation
     │
     └── platform
@@ -131,6 +132,7 @@ KnowAIS Platform
 
 KnowAIS Presentation
 * https://bit.ly/KnowAIS-Slide 
+* https://clipchamp.com/watch/xzwQCSxdgYc 
 
 
 
