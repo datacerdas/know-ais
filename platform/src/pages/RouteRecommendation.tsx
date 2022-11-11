@@ -5,26 +5,13 @@ import "mapbox-gl/dist/mapbox-gl.css"
 import { Select, createOptions } from "@thisbeyond/solid-select"
 import "@thisbeyond/solid-select/style.css"
 
-import * as h3 from "h3-js"
-import geojson2h3 from "geojson2h3"
-
-import HackathonLogo from "../assets/hackathon-web-banner.png"
-
 // @ts-ignore
 import trajectory22 from "../data/trajectory/ais_trajectory_2022.csv"
 
 // @ts-ignore
-import trajectory21 from "../data/trajectory/ais_trajectory_2021.csv"
-
-// @ts-ignore
-import ports__ from "../data/ports__.csv"
-// @ts-ignore
-import shortest from "../data/trajectory/dummy_shortest_trajectory.csv"
-// @ts-ignore
 import shortest_path from "../data/trajectory/port_shortest_path.csv"
 
 import AppLoader from "../AppLoader"
-import { movement, setMovement } from "../stores/GeoStore"
 import { setShipping, shipping } from "../stores/ShippingStore"
 import { ports } from "../stores/NodeStore"
 
@@ -127,7 +114,7 @@ const RouteRecommendation: Component = () => {
             for (let i = 0; i < shortMovements_id.length; i++) {
                 let shippingIndex = shipping.trajectory.findIndex((obj) => obj.id_trajectory == shortMovements_id[i])
                 if (shippingIndex !== -1) {
-                  shortTrajectories.push(shipping.trajectory[i].movements)
+                  shortTrajectories.push(shipping.trajectory[shippingIndex].movements)
                   // console.log(shipping.trajectory[i], 's')    
                 }              
             }
@@ -136,14 +123,20 @@ const RouteRecommendation: Component = () => {
             
             let shortNodePorts: {}[] =[]
             for (let i = 0; i < shortPorts_id.length; i++) {
-                let portIndex = ports.port.findIndex((obj) => obj.port_id  == shortPorts_id[i])
+                let portIndex = ports.port.findIndex((obj) => obj.port_id == shortPorts_id[i])
                 if (portIndex !== -1) {
-                  shortNodePorts.push(ports.port[i].h3_5_hexring_MultiPolygon)
-                  // console.log(shipping.trajectory[i], 's')    
+                  shortNodePorts.push(ports.port[portIndex].h3_5_hexring_MultiPolygon)
+                  console.log(ports.port[portIndex].port_id, 's', shortPorts_id[i], 's', ports.port[portIndex].port)    
                 }              
             }
             // console.log(shortNodePorts, 'eadhheq')
             setShortestNodePorts(shortNodePorts)
+
+            console.log(origin(),'to', destination())
+            console.log(shortestTrajectories(), 'traj')
+            console.log(shortestNodePorts(), 'ports')
+
+            console.log(ports)
             
           }}
         />
