@@ -19,60 +19,56 @@ import trajectory21 from "../data/trajectory/ais_trajectory_2021.csv"
 // @ts-ignore
 import ports__ from "../data/ports__.csv"
 // @ts-ignore
-
 import shortest from "../data/trajectory/dummy_shortest_trajectory.csv"
+// @ts-ignore
+import shortest_path from "../data/trajectory/port_shortest_path.csv"
 
 import AppLoader from "../AppLoader"
 import { movement, setMovement } from "../stores/GeoStore"
 import { setShipping, shipping } from "../stores/ShippingStore"
 import { ports } from "../stores/NodeStore"
 
+
 let trajectoryObject: {}[] = []
-trajectory21.forEach((e: any) => {
-  trajectoryObject.push({
-    id_trajectory: e.id_shipping + "-2021",
-    origin: e.origin_port_name,
-    destination: e.destination_port_name,
-    movements: {
-      type: "Feature",
-      geometry: {
-        type: "Point",
-        coordinates: JSON.parse(e.movements),
-      },
-    },
-  })
-})
-trajectory22.forEach((e: any) => {
-  trajectoryObject.push({
-    id_trajectory: e.id_shipping + "-2022",
-    origin: e.origin_port_name,
-    destination: e.destination_port_name,
-    movements: {
-      type: "Feature",
-      geometry: {
-        type: "LineString",
-        coordinates: JSON.parse(e.movements),
-      },
-    },
-  })
-})
+
 const RouteRecommendation: Component = () => {
   const originSelect = createOptions([
     ...new Set(
-      shortest.map(({ origin_port_name }: any) => origin_port_name)
+      shortest_path.map(({ sourceNodeName }: any) => sourceNodeName)
     ),
   ])
   const [destinationSelect, setDestinationSelect] = createSignal([])
 
-  const [origin, setOrigin] = createSignal("KIEL")
+  const [origin, setOrigin] = createSignal('')
+  const [destination, setDestination] = createSignal('')
+  // const [shortTrajectories, setShortTrajectories] = createSignal([])
 
   const [shortestTrajectories, setShortestTrajectories] = createSignal([])
+  const [shortestNodePorts, setShortestNodePorts] = createSignal([])
 
   const [filteredPort, setFilteredPort] = createSignal([])
 
+  
+  trajectory22.forEach((e: any) => {
+    trajectoryObject.push({
+      // id_trajectory: e.id_shipping + "-2022",
+      id_trajectory: e.id_shipping,
+      origin_port_id: e.origin_port_id,
+      origin_port_name: e.origin_port_name,
+      destination_port_id: e.destination_port_id,
+      destination_port_name: e.destination_port_name,
+      movements: {
+        type: "Feature",
+        geometry: {
+          type: "LineString",
+          coordinates: JSON.parse(e.movements),
+        },
+      },
+    })
+  })
+
   createEffect(() => {
     setShipping("trajectory", trajectoryObject)
-    console.log(ports)
   })
 
   return (
@@ -81,17 +77,20 @@ const RouteRecommendation: Component = () => {
         class="top-32 left-8"
         style={{ position: "absolute", "z-index": 1 }}
       >
-        <legend class="text-white mb-2 font-bold">Select Origin: </legend>
+        <legend class="text-white mb-2 font-bold">Origin Port: </legend>
         <Select
           class="know-ais w-80"
           {...originSelect}
           onChange={(value) => {
+            setShortestTrajectories([])
+            setShortestNodePorts([])
+            setDestinationSelect([])
             let dest = [
               ...new Set(
-                shortest.map(
-                  ({ origin_port_name, destination_port_name }: any) =>
-                    origin_port_name == value
-                      ? destination_port_name
+                shortest_path.map(
+                  ({ sourceNodeName, targetNodeName }: any) =>
+                  sourceNodeName == value
+                      ? targetNodeName
                       : null
                 )
               ),
@@ -105,32 +104,59 @@ const RouteRecommendation: Component = () => {
           }}
         />
         <legend class="text-white my-2 font-bold">
-          Select Destination:{" "}
+          Destination Port:{" "}
         </legend>
         <Select
           class="know-ais w-80"
           options={destinationSelect}
           onChange={(value) => {
-            let filtered = shipping.trajectory.filter(
-              (obj: any) =>
-                obj.destination == value && obj.origin == origin()
-            )
-            let port = filteredPort()
-            port.push(value)
-            setFilteredPort(port)
-            setShortestTrajectories(filtered)
+            setDestination(value)
+            // console.log(origin(), destination(), 'arieqo')
+            let shortMovements: [] = []
+            let shortPorts: [] = []
+            shortest_path.forEach((e:any) => {
+              if(e.sourceNodeName == origin() && e.targetNodeName == destination()) {
+                shortMovements = JSON.parse(e.shipping_id.replace(/'/g, '"'))
+                shortPorts = JSON.parse(e.port_id.replace(/'/g, '"'))
+              }
+            })
+            let shortMovements_id = shortMovements.filter((v, i, a) => a.indexOf(v) === i)
+            let shortPorts_id = shortPorts.filter((v, i, a) => a.indexOf(v) === i)
+
+            let shortTrajectories: {}[] =[]
+            for (let i = 0; i < shortMovements_id.length; i++) {
+                let shippingIndex = shipping.trajectory.findIndex((obj) => obj.id_trajectory == shortMovements_id[i])
+                if (shippingIndex !== -1) {
+                  shortTrajectories.push(shipping.trajectory[i].movements)
+                  // console.log(shipping.trajectory[i], 's')    
+                }              
+            }
+            // console.log(shortTrajectories, 'eadhheq')
+            setShortestTrajectories(shortTrajectories)
+            
+            let shortNodePorts: {}[] =[]
+            for (let i = 0; i < shortPorts_id.length; i++) {
+                let portIndex = ports.port.findIndex((obj) => obj.port_id  == shortPorts_id[i])
+                if (portIndex !== -1) {
+                  shortNodePorts.push(ports.port[i].h3_5_hexring_MultiPolygon)
+                  // console.log(shipping.trajectory[i], 's')    
+                }              
+            }
+            // console.log(shortNodePorts, 'eadhheq')
+            setShortestNodePorts(shortNodePorts)
+            
           }}
         />
       </div>
-      //TODO filter port
+      
       <For
-        each={ports.port.filter((x) => filteredPort().includes(x.port))}
+        each={shortestNodePorts()}
       >
         {(item: any) => (
           <Source
             source={{
               type: "geojson",
-              data: item.h3_5_hexring_MultiPolygon,
+              data: item,
             }}
           >
             <Layer
@@ -151,7 +177,7 @@ const RouteRecommendation: Component = () => {
           <Source
             source={{
               type: "geojson",
-              data: item.movements,
+              data: item,
             }}
           >
             <Layer

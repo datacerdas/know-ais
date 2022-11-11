@@ -2,8 +2,10 @@ import { createStore } from "solid-js/store"
 
 export type Shipping = {
   id_trajectory: string
-  origin: string
-  destination: string
+  origin_port_name: string
+  origin_port_id: string
+  destination_port_name: string
+  destination_port_id: string
   movements: [[]]
 }
 
