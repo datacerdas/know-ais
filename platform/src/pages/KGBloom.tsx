@@ -33,8 +33,15 @@ const KGBloom: Component<{
                 <iframe 
                     width="1280"
                     height="580"
-                    src="https://bloom.neo4j.io/index.html?connectURL=neo4j%2Bs%3A%2F%2F101537b0.databases.neo4j.io&_ga=2.92822168.4616645.1667972888-2146945464.1667447232"
-                ></iframe>
+                    src="https://bloom.neo4j.io/index.html?connectURL=neo4j%2Bs%3A%2F%2F101537b0.databases.neo4j.io&_ga=2.92822168.4616645.1667972888-2146945464.1667447232">
+                </iframe>
+
+                {/* <iframe frameborder="0" allowtransparency="true" allowfullscreen="true" 
+                  title="Data Visualization" marginheight="0" marginwidth="0" scrolling="yes" 
+                  style="display: block; width: 100%; height: 575px; visibility: visible;" 
+                  src="https://public.tableau.com/views/TenagaKerjaBoard/TenagaKerjaPariwisata?:embed=y&amp;:showVizHome=n&amp;:tabs=n&amp;:toolbar=n&amp;:device=mobile&amp;showAppBanner=false&amp;:apiID=host0#navType=0&amp;navSrc=Parse">
+
+                </iframe> */}
             </div>
           </div>
           

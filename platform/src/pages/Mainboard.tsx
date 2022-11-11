@@ -22,6 +22,7 @@ import { countries, ports, setCountries, setPorts } from "../stores/NodeStore";
 
 import AppLoader from "../AppLoader";
 import KGBloom from "./KGBloom";
+import NodeImportance from "./NodeImportance";
 
 const Mainboard: Component = () => {
     const [viewport, setViewport] = createSignal({
@@ -107,7 +108,7 @@ const Mainboard: Component = () => {
                                             onClick={e => {setSectionPage('cluster')}}>Community Detection</button></li>
                             <li><button class="hover:text-sky-500 dark:hover:text-sky-400 px-4 py-2 rounded-lg" 
                                             classList={{ 'text-sky-500 bg-white/[.1]': sectionPage() == 'node' }}
-                                            onClick={e => {setSectionPage('node')}}>Node Importance</button></li>
+                                            onClick={e => {setSectionPage('node')}}>Port Importance</button></li>
                             <li><button class="hover:text-sky-500 dark:hover:text-sky-400 px-4 py-2 rounded-lg" 
                                             classList={{ 'text-sky-500 bg-white/[.1]': sectionPage() == 'kg' }}
                                             onClick={e => {setSectionPage('kg');}}>Knowledge Graph</button>
@@ -152,6 +153,14 @@ const Mainboard: Component = () => {
                 </Match>
                 <Match when={sectionPage() == 'cluster'}>
                     <CommunityDetection />
+                </Match>
+                <Match when={sectionPage() == 'node'}>
+                    <div style={{ position: 'absolute', 'z-index': 1 }} 
+                            class="flex items-center justify-center">
+                        <NodeImportance 
+                          sectionPage={sectionPage()}
+                          setSectionPage={setSectionPage}/>
+                    </div>
                 </Match>
                 <Match when={sectionPage() == 'kg'}>
                     <div style={{ position: 'absolute', 'z-index': 1 }} 
