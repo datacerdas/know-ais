@@ -91,9 +91,13 @@ The distance is calculated by aggregating each movement of the vessel during the
     │   ├── [...]
     │           The key figures that we produced
     │
+    ├── presentation
+    │   ├── KnowAIS_ Self-Service Analytics Platform for Global Shipping Network.pdf
+    │           The result presentation
+    │
     └── platform
         ├── [...]
-                The KnowAIS platform
+                KnowAIS platform, build with SolidJS
 
 
 ## Limitation
@@ -111,4 +115,22 @@ The distance is calculated by aggregating each movement of the vessel during the
 * Improve the backend integration and study the best practice architecture that might sustain for a long time and easy to scale using cloud architecture.
 * Provide more broadened and advanced analytics which will enrich data-driven solution.
 * Focus as the measurement platform on controlling SDGs Goals
+
+
+## Appendix
+Code Repository
+* https://github.com/datacerdas/know-ais 
+* https://code.officialstatistics.org/datacerdas/know-ais 
+
+S3 Bucket Trajectory Result Repository
+* s3://know-ais/data/ 
+
+KnowAIS Platform
+* https://know-ais.vercel.app/ 
+* https://know-ais.datacerdas.id/
+
+KnowAIS Presentation
+* https://bit.ly/KnowAIS-Slide 
+
+
 
