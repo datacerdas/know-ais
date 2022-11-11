@@ -1,0 +1,22 @@
+code,country,communityId
+lb,Lebanon,4
+gr,Greece,4
+eg,Egypt,4
+il,Israel,4
+cy,Cyprus,4
+it,Italy,4
+me,Montenegro,4
+UNKNOWN,,12
+se,Sweden,16
+no,Norway,16
+de,Germany,16
+dk,Denmark,16
+fi,Finland,16
+ru,Russian Federation,16
+ee,Estonia,16
+lv,Latvia,16
+ua,Ukraine,17
+tr,Turkey,17
+ro,Romania,17
+ge,Georgia,17
+bg,Bulgaria,17

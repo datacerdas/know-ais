@@ -1,0 +1,3 @@
+sourceNodeName,targetNodeName,total_distance,shipping_id,port_id
+KÖPENHAMN,KIEL,384.36,"[None, '265002000120', None, '2664200003', None, '24619100070', None]","['4305', None, '932', None, '32140', None, '111']"
+Ambarli,Constanta,421.0,"[None, '27101061020', None, '47764810089', None, '5380077687', None, '42300210018', None]","['wfp.17151', None, 'wfp.16140', None, 'wfp.15144', None, 'wfp.14575', None, 'wfp.15023']"
