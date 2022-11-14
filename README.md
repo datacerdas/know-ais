@@ -2,6 +2,7 @@
 
 # KnowAIS: Self-Service Analytics Platform for Global Shipping Network
 
+![KnowAIS Video Teaser](https://clipchamp.com/watch/xzwQCSxdgYc)
 
 <!-- *** -->
 
