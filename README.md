@@ -80,12 +80,12 @@ The distance is calculated by aggregating each movement of the vessel during the
     .
     ├── notebooks
     │   ├── 00_Data_preparation.ipynb
-    │   └── 01_Sampling_AIS.ipynb
-    │   └── 02_Trajectory_AIS_pyspark.ipynb
-    │   └── 02a_Trajectory_AIS_pandas.ipynb
-    │   └── 03_Inject_AIS_result.ipynb
-    │   └── 04_Graph_Analysis_Port.ipynb
-    05_Graph_Analysis_Country.ipynb
+    │   ├── 01_Sampling_AIS.ipynb
+    │   ├── 02_Trajectory_AIS_pyspark.ipynb
+    │   ├── 02a_Trajectory_AIS_pandas.ipynb
+    │   ├── 03_Inject_AIS_result.ipynb
+    │   ├── 04_Graph_Analysis_Port.ipynb
+    │   └── 05_Graph_Analysis_Country.ipynb
     │           The Jupyter Notebooks that we created during the processing
     │
     ├── results
@@ -98,7 +98,7 @@ The distance is calculated by aggregating each movement of the vessel during the
     │           The result presentation
     │
     └── platform
-        ├── [...]
+        └── [...]
                 KnowAIS platform, build with SolidJS
 
 
