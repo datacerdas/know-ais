@@ -2,16 +2,46 @@
 
 # KnowAIS: Self-Service Analytics Platform for Global Shipping Network
 
-[![KnowAIS Video Teaser](https://i.imgur.com/F5l2qYb.png)](https://clipchamp.com/watch/xzwQCSxdgYc?utm_source=share&utm_medium=social&utm_campaign=watch)
+KnowAIS is a winning project in The UN Big Data Hackathon 2022 Expert Track, as well as being awarded The Best Visualization.
 
-<!-- *** -->
-
-## Contributors
+## Cerdasdata Team Members
 - [Ignatius Aditya Setyadi](https://www.linkedin.com/in/adityasetyadi/) *BPS - Statistics Indonesia*
 - [Amanda Pratama Putra]() *Tokopedia*
 - [Wismu Sunarmodo]() *BRIN - National Research and Innovation Agency*
 - [Sugiri]() *BPS - Statistics Indonesia*
 - [Amin Rois Sinung Nugroho]() *BPS - Statistics Indonesia*
+
+
+<hr />
+
+<table>
+    <tr>
+        <td style="text-align: center;">
+            🥇🏆🏅https://unstats.un.org/bigdata/events/2022/hackathon/winners-bde.cshtml
+        </td>
+    </tr>
+    <tr>
+        <td>
+        
+[![image](https://user-images.githubusercontent.com/1611358/210019239-9b8c268a-25fb-47eb-8afb-885d238c0ada.png)](https://unstats.un.org/bigdata/events/2022/hackathon/winners-bde.cshtml#gh-dark-mode-only)
+[![image](https://user-images.githubusercontent.com/1611358/210027917-f5f4c2c2-f547-4c87-8164-549b5a8f52ae.png)](https://unstats.un.org/bigdata/events/2022/hackathon/winners-bde.cshtml#gh-dark-mode-only)
+[![image](https://user-images.githubusercontent.com/1611358/210027960-934cd275-3834-4c43-b3aa-b9de74c9d0fb.png)](https://unstats.un.org/bigdata/events/2022/hackathon/winners-bde.cshtml#gh-dark-mode-only)
+
+
+[![image](https://user-images.githubusercontent.com/1611358/210018996-6ca01e60-e904-4c29-a21d-6de23062caa4.png)](https://unstats.un.org/bigdata/events/2022/hackathon/winners-bde.cshtml#gh-light-mode-only)
+[![image](https://user-images.githubusercontent.com/1611358/210028182-16872315-3adc-4c40-8827-4457d414c573.png)](https://unstats.un.org/bigdata/events/2022/hackathon/winners-bde.cshtml#gh-light-mode-only)
+[![image](https://user-images.githubusercontent.com/1611358/210028123-e7992be2-8524-476f-94f6-1136cb4c752e.png)](https://unstats.un.org/bigdata/events/2022/hackathon/winners-bde.cshtml#gh-light-mode-only)
+        </td>
+    </tr>
+</table>
+
+
+
+## Presentation Video
+[![KnowAIS Video Teaser](https://i.imgur.com/F5l2qYb.png)](https://clipchamp.com/watch/xzwQCSxdgYc?utm_source=share&utm_medium=social&utm_campaign=watch)
+
+<!-- *** -->
+
 
 ## Objectives
 * Develop decision support system to process AIS Big Data in timely manner through insight generation and monitoring of global shipping network.
