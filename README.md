@@ -2,7 +2,8 @@
 
 # KnowAIS: Self-Service Analytics Platform for Global Shipping Network
 
-KnowAIS is a winning project in The UN Big Data Hackathon 2022 Expert Track, as well as being awarded The Best Visualization.
+KnowAIS project won first place and Best Visualization in The UN Big Data Hackathon 2022 Big Data Expert Track.
+https://unstats.un.org/bigdata/events/2022/hackathon/winners-bde.cshtml
 
 ## Cerdasdata Team Members
 - [Ignatius Aditya Setyadi](https://www.linkedin.com/in/adityasetyadi/) *BPS - Statistics Indonesia*
